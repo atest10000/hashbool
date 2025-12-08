@@ -73,7 +73,7 @@ export async function POST(request: NextRequest) {
     const mailOptions = {
       from: `"${sanitizedName}" <${process.env.SMTP_USER}>`,
       replyTo: sanitizedEmail,
-      to: 'hashbool@gmail.com',
+      to: 'abrajsa@gmail.com',
       subject: `رسالة جديدة من نموذج الاتصال - ${sanitizedName}`,
       html: `
         <!DOCTYPE html>
