@@ -8,8 +8,11 @@ function isValidEmail(email: string): boolean {
 }
 
 export async function POST(request: NextRequest) {
+  console.log('📧 Contact form API called');
   try {
-    const { name, email, phone, message } = await request.json();
+    const body = await request.json();
+    console.log('Received form data:', { name: body.name, email: body.email, hasPhone: !!body.phone, hasMessage: !!body.message });
+    const { name, email, phone, message } = body;
 
     // Validate required fields
     if (!name || !email || !message) {
@@ -35,12 +38,22 @@ export async function POST(request: NextRequest) {
 
     // Check if SMTP credentials are configured
     if (!process.env.SMTP_USER || !process.env.SMTP_PASSWORD) {
-      console.error('SMTP credentials not configured. Please set SMTP_USER and SMTP_PASSWORD environment variables.');
+      console.error('SMTP credentials not configured.');
+      console.error('SMTP_USER:', process.env.SMTP_USER ? 'SET' : 'NOT SET');
+      console.error('SMTP_PASSWORD:', process.env.SMTP_PASSWORD ? 'SET' : 'NOT SET');
+      console.error('Please set SMTP_USER and SMTP_PASSWORD environment variables in .env.local');
+      console.error('Make sure to restart the Next.js server after creating/updating .env.local');
       return NextResponse.json(
         { error: 'خدمة البريد الإلكتروني غير مُعدة' },
         { status: 500 }
       );
     }
+    
+    console.log('SMTP Configuration:', {
+      host: process.env.SMTP_HOST || 'smtp.gmail.com',
+      port: process.env.SMTP_PORT || '587',
+      user: process.env.SMTP_USER,
+    });
 
     // Create nodemailer transporter
     // For production, use environment variables for SMTP credentials
@@ -111,14 +124,27 @@ export async function POST(request: NextRequest) {
     };
 
     // Send email using nodemailer
-    const info = await transporter.sendMail(mailOptions);
+    console.log('📤 Attempting to send email...');
+    console.log('   To: abrajsa@gmail.com');
+    console.log('   From:', process.env.SMTP_USER);
+    console.log('   Subject:', `رسالة جديدة من نموذج الاتصال - ${sanitizedName}`);
+    
+    try {
+      const info = await transporter.sendMail(mailOptions);
+      console.log('✅ Email sent successfully!');
+      console.log('   Message ID:', info.messageId);
+      console.log('   Response:', info.response);
 
-    console.log('Email sent successfully:', info.messageId);
-
-    return NextResponse.json(
-      { message: 'تم إرسال البريد الإلكتروني بنجاح', messageId: info.messageId },
-      { status: 200 }
-    );
+      return NextResponse.json(
+        { message: 'تم إرسال البريد الإلكتروني بنجاح', messageId: info.messageId },
+        { status: 200 }
+      );
+    } catch (sendError: any) {
+      console.error('❌ Error in sendMail:', sendError);
+      console.error('   Error code:', sendError.code);
+      console.error('   Error message:', sendError.message);
+      throw sendError; // Re-throw to be caught by outer catch
+    }
   } catch (error: any) {
     console.error('Error sending email with nodemailer:', error);
     

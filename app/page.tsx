@@ -25,6 +25,7 @@ export default function Soon() {
     setSubmitStatus('idle');
 
     try {
+      console.log('Submitting form with data:', formData);
       const response = await fetch('/api/contact', {
         method: 'POST',
         headers: {
@@ -33,13 +34,18 @@ export default function Soon() {
         body: JSON.stringify(formData),
       });
 
+      const data = await response.json();
+      console.log('API Response:', { status: response.status, data });
+
       if (response.ok) {
         setSubmitStatus('success');
         setFormData({ name: '', email: '', phone: '', message: '' });
       } else {
+        console.error('API Error:', data.error);
         setSubmitStatus('error');
       }
     } catch (error) {
+      console.error('Form submission error:', error);
       setSubmitStatus('error');
     } finally {
       setIsSubmitting(false);
