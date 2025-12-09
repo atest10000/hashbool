@@ -59,7 +59,7 @@ export default function Soon() {
           {/* Coming Soon Section */}
           <div className="text-center space-y-3">
             <h1 className="text-5xl font-bold tracking-tight text-white sm:text-6xl drop-shadow-lg">
-              قريباً
+              قريباً <span className="text-white/80 font-normal text-4xl sm:text-5xl">Soon</span>
             </h1>
             <p className="text-xl text-white/90 font-medium">
               نحن نعمل على شيء رائع. ترقبوا!
@@ -102,7 +102,7 @@ export default function Soon() {
                       required
                       value={formData.name}
                       onChange={handleChange}
-                      className="w-full rounded-xl border-2 border-gray-200 bg-gray-50 px-5 py-4 text-gray-900 placeholder-gray-400 transition-all duration-200 focus:border-blue-500 focus:bg-white focus:outline-none focus:ring-4 focus:ring-blue-500/10"
+                      className="w-full rounded-xl border-2 border-blue-200 bg-white px-5 py-4 text-black placeholder-gray-400 transition-all duration-200 focus:border-blue-500 focus:bg-white focus:outline-none focus:ring-4 focus:ring-blue-500/10"
                       placeholder="أدخل اسمك الكامل"
                     />
                   </div>
@@ -124,7 +124,7 @@ export default function Soon() {
                       required
                       value={formData.email}
                       onChange={handleChange}
-                      className="w-full rounded-xl border-2 border-gray-200 bg-gray-50 px-5 py-4 text-gray-900 placeholder-gray-400 transition-all duration-200 focus:border-blue-500 focus:bg-white focus:outline-none focus:ring-4 focus:ring-blue-500/10"
+                      className="w-full rounded-xl border-2 border-blue-200 bg-white px-5 py-4 text-black placeholder-gray-400 transition-all duration-200 focus:border-blue-500 focus:bg-white focus:outline-none focus:ring-4 focus:ring-blue-500/10"
                       placeholder="example@email.com"
                     />
                   </div>
@@ -145,7 +145,7 @@ export default function Soon() {
                       name="phone"
                       value={formData.phone}
                       onChange={handleChange}
-                      className="w-full rounded-xl border-2 border-gray-200 bg-gray-50 px-5 py-4 text-gray-900 placeholder-gray-400 transition-all duration-200 focus:border-blue-500 focus:bg-white focus:outline-none focus:ring-4 focus:ring-blue-500/10"
+                      className="w-full rounded-xl border-2 border-blue-200 bg-white px-5 py-4 text-black placeholder-gray-400 transition-all duration-200 focus:border-blue-500 focus:bg-white focus:outline-none focus:ring-4 focus:ring-blue-500/10"
                       placeholder="+966 50 123 4567"
                     />
                   </div>
@@ -167,7 +167,7 @@ export default function Soon() {
                       rows={6}
                       value={formData.message}
                       onChange={handleChange}
-                      className="w-full rounded-xl border-2 border-gray-200 bg-gray-50 px-5 py-4 text-gray-900 placeholder-gray-400 transition-all duration-200 focus:border-blue-500 focus:bg-white focus:outline-none focus:ring-4 focus:ring-blue-500/10 resize-none"
+                      className="w-full rounded-xl border-2 border-blue-200 bg-white px-5 py-4 text-black placeholder-gray-400 transition-all duration-200 focus:border-blue-500 focus:bg-white focus:outline-none focus:ring-4 focus:ring-blue-500/10 resize-none"
                       placeholder="اكتب رسالتك هنا..."
                     />
                   </div>
